@@ -7,7 +7,7 @@ services:
     container_name: seed-service-nestjs
     restart: unless-stopped
     ports:
-      - "3001:3001"
+      - "3003:3003"
     env_file:
       - .env
     networks:

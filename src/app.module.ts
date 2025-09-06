@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MfeRemoteModule } from './mfe-remote/mfe-remote.module';
+import { ExampleMongodbDocModule } from './example-crud/example-crud.module';
 
 const DB_IMPORTS =
   process.env.GENERATE_OPENAPI === 'true'
@@ -22,7 +22,7 @@ const DB_IMPORTS =
       isGlobal: true,
     }),
     ...DB_IMPORTS,
-    MfeRemoteModule,
+    ExampleMongodbDocModule,
   ],
   controllers: [],
   providers: [],

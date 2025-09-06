@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/mfe-remotes/auth-test": {
+    "/example-crud/auth-test": {
       "get": {
-        "operationId": "MfeRemoteController_authTest",
+        "operationId": "ExampleCrudController_authTest",
         "parameters": [],
         "responses": {
           "200": {
@@ -18,20 +18,20 @@
           }
         },
         "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       }
     },
-    "/mfe-remotes": {
+    "/example-crud": {
       "post": {
-        "operationId": "MfeRemoteController_create",
+        "operationId": "ExampleCrudController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateMfeRemoteDto"
+                "$ref": "#/components/schemas/CreateExampleMongodbDocDto"
               }
             }
           }
@@ -42,18 +42,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MfeRemoteDto"
+                  "$ref": "#/components/schemas/ExampleMongodbDocDto"
                 }
               }
             }
           }
         },
         "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       },
       "get": {
-        "operationId": "MfeRemoteController_findAll",
+        "operationId": "ExampleCrudController_findAll",
         "parameters": [
           {
             "name": "archived",
@@ -73,7 +73,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/MfeRemoteDto"
+                    "$ref": "#/components/schemas/ExampleMongodbDocDto"
                   }
                 }
               }
@@ -81,13 +81,13 @@
           }
         },
         "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       }
     },
-    "/mfe-remotes/{id}": {
+    "/example-crud/{id}": {
       "get": {
-        "operationId": "MfeRemoteController_findOne",
+        "operationId": "ExampleCrudController_findOne",
         "parameters": [
           {
             "name": "id",
@@ -104,18 +104,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MfeRemoteDto"
+                  "$ref": "#/components/schemas/ExampleMongodbDocDto"
                 }
               }
             }
           }
         },
         "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       },
       "patch": {
-        "operationId": "MfeRemoteController_update",
+        "operationId": "ExampleCrudController_update",
         "parameters": [
           {
             "name": "id",
@@ -131,7 +131,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateMfeRemoteDto"
+                "$ref": "#/components/schemas/UpdateExampleMongodbDocDto"
               }
             }
           }
@@ -142,18 +142,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MfeRemoteDto"
+                  "$ref": "#/components/schemas/ExampleMongodbDocDto"
                 }
               }
             }
           }
         },
         "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       },
       "delete": {
-        "operationId": "MfeRemoteController_remove",
+        "operationId": "ExampleCrudController_remove",
         "parameters": [
           {
             "name": "id",
@@ -170,13 +170,13 @@
           }
         },
         "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       }
     },
-    "/mfe-remotes/name/{name}": {
+    "/example-crud/name/{name}": {
       "get": {
-        "operationId": "MfeRemoteController_findByName",
+        "operationId": "ExampleCrudController_findByName",
         "parameters": [
           {
             "name": "name",
@@ -193,20 +193,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MfeRemoteDto"
+                  "$ref": "#/components/schemas/ExampleMongodbDocDto"
                 }
               }
             }
           }
         },
         "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       }
     },
-    "/mfe-remotes/{id}/archive": {
+    "/example-crud/{id}/archive": {
       "patch": {
-        "operationId": "MfeRemoteController_archive",
+        "operationId": "ExampleCrudController_archive",
         "parameters": [
           {
             "name": "id",
@@ -223,20 +223,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MfeRemoteDto"
+                  "$ref": "#/components/schemas/ExampleMongodbDocDto"
                 }
               }
             }
           }
         },
         "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       }
     },
-    "/mfe-remotes/{id}/unarchive": {
+    "/example-crud/{id}/unarchive": {
       "patch": {
-        "operationId": "MfeRemoteController_unarchive",
+        "operationId": "ExampleCrudController_unarchive",
         "parameters": [
           {
             "name": "id",
@@ -253,50 +253,20 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MfeRemoteDto"
+                  "$ref": "#/components/schemas/ExampleMongodbDocDto"
                 }
               }
             }
           }
         },
         "tags": [
-          "MFE Remotes"
-        ]
-      }
-    },
-    "/mfe-remotes/{id}/status": {
-      "patch": {
-        "operationId": "MfeRemoteController_updateStatus",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MfeRemoteDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "MFE Remotes"
+          "Example Crud"
         ]
       }
     }
   },
   "info": {
-    "title": "NGX MFE Orchestrator API",
+    "title": "NGX seed-service-nestjs API",
     "description": "",
     "version": "1.0.0",
     "contact": {}
@@ -316,81 +286,41 @@
           "message"
         ]
       },
-      "MfeRemoteType": {
-        "type": "string",
-        "enum": [
-          "structural",
-          "user-journey"
-        ]
-      },
-      "StructuralOverridesDto": {
+      "ExampleMongodbDocObjectDto": {
         "type": "object",
         "properties": {
-          "header": {
-            "type": "string",
-            "enum": [
-              "full",
-              "relaxed",
-              "compact",
-              "disabled"
-            ]
+          "street": {
+            "type": "string"
           },
-          "nav": {
-            "type": "string",
-            "enum": [
-              "verbose",
-              "minimal",
-              "disabled"
-            ]
+          "city": {
+            "type": "string"
           },
-          "footer": {
-            "type": "string",
-            "enum": [
-              "full",
-              "relaxed",
-              "compact",
-              "disabled"
-            ]
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
           }
-        }
-      },
-      "StructuralOverrideMode": {
-        "type": "string",
-        "enum": [
-          "full",
-          "relaxed",
-          "compact",
-          "disabled"
+        },
+        "required": [
+          "street",
+          "city",
+          "state",
+          "zip"
         ]
       },
-      "StructuralNavOverrideMode": {
-        "type": "string",
-        "enum": [
-          "verbose",
-          "minimal",
-          "disabled"
-        ]
-      },
-      "StructuralSubType": {
-        "type": "string",
-        "enum": [
-          "header",
-          "nav",
-          "footer"
-        ]
-      },
-      "CreateMfeRemoteDto": {
+      "CreateExampleMongodbDocDto": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string"
           },
-          "remoteEntryUrl": {
+          "type": {
             "type": "string",
-            "format": "uri"
-          },
-          "status": {
-            "type": "string"
+            "enum": [
+              "SOME_ENUM",
+              "SOME_OTHER_ENUM"
+            ]
           },
           "description": {
             "type": "string"
@@ -398,52 +328,20 @@
           "archived": {
             "type": "boolean"
           },
-          "type": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MfeRemoteType"
-              }
-            ]
+          "exampleMongodbDocObject": {
+            "$ref": "#/components/schemas/ExampleMongodbDocObjectDto"
           },
-          "structuralOverrides": {
-            "$ref": "#/components/schemas/StructuralOverridesDto"
-          },
-          "structuralOverridesHeader": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructuralOverrideMode"
-              }
-            ]
-          },
-          "structuralOverridesNav": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructuralNavOverrideMode"
-              }
-            ]
-          },
-          "structuralOverridesFooter": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructuralOverrideMode"
-              }
-            ]
-          },
-          "structuralSubType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructuralSubType"
-              }
-            ]
+          "lastUpdated": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "required": [
           "name",
-          "remoteEntryUrl",
           "type"
         ]
       },
-      "MfeRemoteDto": {
+      "ExampleMongodbDocDto": {
         "type": "object",
         "properties": {
           "_id": {
@@ -452,33 +350,15 @@
           "name": {
             "type": "string"
           },
-          "remoteEntryUrl": {
-            "type": "string",
-            "format": "uri"
-          },
           "type": {
             "type": "string",
             "enum": [
-              "structural",
-              "user-journey"
-            ]
-          },
-          "structuralOverrides": {
-            "$ref": "#/components/schemas/StructuralOverridesDto"
-          },
-          "structuralSubType": {
-            "type": "string",
-            "enum": [
-              "header",
-              "nav",
-              "footer"
+              "SOME_ENUM",
+              "SOME_OTHER_ENUM"
             ]
           },
           "version": {
             "type": "number"
-          },
-          "status": {
-            "type": "string"
           },
           "description": {
             "type": "string"
@@ -489,31 +369,37 @@
           },
           "archived": {
             "type": "boolean"
+          },
+          "exampleMongodbDocObject": {
+            "$ref": "#/components/schemas/ExampleMongodbDocObjectDto"
+          },
+          "__v": {
+            "type": "number"
           }
         },
         "required": [
           "_id",
           "name",
-          "remoteEntryUrl",
           "type",
           "version",
           "description",
           "lastUpdated",
-          "archived"
+          "archived",
+          "__v"
         ]
       },
-      "UpdateMfeRemoteDto": {
+      "UpdateExampleMongodbDocDto": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string"
           },
-          "remoteEntryUrl": {
+          "type": {
             "type": "string",
-            "format": "uri"
-          },
-          "status": {
-            "type": "string"
+            "enum": [
+              "SOME_ENUM",
+              "SOME_OTHER_ENUM"
+            ]
           },
           "description": {
             "type": "string"
@@ -521,43 +407,12 @@
           "archived": {
             "type": "boolean"
           },
-          "type": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/MfeRemoteType"
-              }
-            ]
+          "exampleMongodbDocObject": {
+            "$ref": "#/components/schemas/ExampleMongodbDocObjectDto"
           },
-          "structuralOverrides": {
-            "$ref": "#/components/schemas/StructuralOverridesDto"
-          },
-          "structuralOverridesHeader": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructuralOverrideMode"
-              }
-            ]
-          },
-          "structuralOverridesNav": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructuralNavOverrideMode"
-              }
-            ]
-          },
-          "structuralOverridesFooter": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructuralOverrideMode"
-              }
-            ]
-          },
-          "structuralSubType": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/StructuralSubType"
-              }
-            ]
+          "lastUpdated": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }

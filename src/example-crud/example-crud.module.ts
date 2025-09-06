@@ -1,24 +1,27 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule, getModelToken } from '@nestjs/mongoose';
 import { NgxAuthClientModule, RemoteAuthGuard } from '@tmdjr/ngx-auth-client';
-import { MfeRemoteController } from './mfe-remote.controller';
-import { MfeRemoteService } from './mfe-remote.service';
-import { MfeRemote, MfeRemoteSchema } from './schemas/mfe-remote.schema';
+import { ExampleCrudController } from './example-crud.controller';
+import { ExampleCrudService } from './example-crud.service';
+import {
+  ExampleMongodbDoc,
+  ExampleMongodbDocSchema,
+} from './schemas/example-mongodb-doc.schema';
 
-const MFE_SCHEMA_IMPORTS =
+const SCHEMA_IMPORTS =
   process.env.GENERATE_OPENAPI === 'true'
     ? []
     : [
         MongooseModule.forFeature([
-          { name: MfeRemote.name, schema: MfeRemoteSchema },
+          { name: ExampleMongodbDoc.name, schema: ExampleMongodbDocSchema },
         ]),
       ];
 // When generating OpenAPI, stub out the Mongoose model and the guard
-const MFE_FAKE_PROVIDERS =
+const FAKE_PROVIDERS =
   process.env.GENERATE_OPENAPI === 'true'
     ? [
         {
-          provide: getModelToken(MfeRemote.name),
+          provide: getModelToken(ExampleMongodbDoc.name),
           // Minimal fake the service can accept; if service calls methods during generation (it shouldn't), add no-op fns
           useValue: {
             // common Mongoose methods we might accidentally touch
@@ -36,8 +39,8 @@ const MFE_FAKE_PROVIDERS =
       ]
     : [];
 @Module({
-  imports: [NgxAuthClientModule, ...MFE_SCHEMA_IMPORTS],
-  controllers: [MfeRemoteController],
-  providers: [MfeRemoteService, ...MFE_FAKE_PROVIDERS],
+  imports: [NgxAuthClientModule, ...SCHEMA_IMPORTS],
+  controllers: [ExampleCrudController],
+  providers: [ExampleCrudService, ...FAKE_PROVIDERS],
 })
-export class MfeRemoteModule {}
+export class ExampleMongodbDocModule {}

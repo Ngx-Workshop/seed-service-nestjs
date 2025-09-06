@@ -2,9 +2,9 @@
 version: '3.8'
 
 services:
-  ngx-mfe-orchestrator:
+  seed-service-nestjs:
     build: .
-    container_name: ngx-mfe-orchestrator
+    container_name: seed-service-nestjs
     restart: unless-stopped
     ports:
       - "3001:3001"

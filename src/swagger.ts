@@ -23,7 +23,7 @@ async function generate() {
 
   console.log('🧩 [openapi] Creating Swagger document...');
   const config = new DocumentBuilder()
-    .setTitle('NGX MFE Orchestrator API')
+    .setTitle('NGX seed-service-nestjs API')
     .setVersion('1.0.0')
     .build();
 

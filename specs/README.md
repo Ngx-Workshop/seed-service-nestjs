@@ -17,3 +17,5 @@ status when work changes. Select work from the user's request and this index;
 the largest folder number is not automatically the active feature.
 
 - [001-deployment-cleanup](001-deployment-cleanup/spec.md): Deployment cleanup; implemented and locally verified.
+
+- [002-service-observability](002-service-observability/spec.md): Implemented and locally verified; Grafana ingestion authorization pending.

@@ -92,3 +92,7 @@ Source observations from 2026-09-29; these are not executed test results.
 
 Remove/update limitations when fixed. Update architecture and environment guidance
 whenever the corresponding implementation changes.
+
+## Deployment storage policy
+
+See [deployment cleanup](deployment-cleanup.md) for success-only image/container retention and local verification.

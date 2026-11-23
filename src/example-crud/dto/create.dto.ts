@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
@@ -102,9 +102,4 @@ export class CreateExampleMongodbDocDto {
   lastUpdated?: string;
 }
 
-/**
- * UPDATE DTO – Partial of Create DTO
- */
-export class UpdateExampleMongodbDocDto extends PartialType(
-  CreateExampleMongodbDocDto
-) {}
+export { UpdateExampleMongodbDocDto } from './update.dto';

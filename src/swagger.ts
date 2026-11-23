@@ -37,9 +37,9 @@ async function generate() {
   console.log(`✅ [openapi] Wrote ${outPath} in ${ms}ms`);
 }
 
-generate().catch((err) => {
+generate().catch((err: unknown) => {
   console.error('❌ [openapi] Failed to generate spec:');
-  console.error(err?.stack || err);
+  console.error(err instanceof Error ? err.stack : err);
   // Make CI fail loudly
   process.exit(1);
 });

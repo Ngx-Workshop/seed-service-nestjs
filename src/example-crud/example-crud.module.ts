@@ -3,6 +3,7 @@ import { MongooseModule, getModelToken } from '@nestjs/mongoose';
 import { NgxAuthClientModule, RemoteAuthGuard } from '@tmdjr/ngx-auth-client';
 import { ExampleCrudController } from './example-crud.controller';
 import { ExampleCrudService } from './example-crud.service';
+import { ObservabilityModule } from '../observability/observability.module';
 import {
   ExampleMongodbDoc,
   ExampleMongodbDocSchema,
@@ -25,10 +26,10 @@ const FAKE_PROVIDERS =
           // Minimal fake the service can accept; if service calls methods during generation (it shouldn't), add no-op fns
           useValue: {
             // common Mongoose methods we might accidentally touch
-            find: () => ({ exec: async () => [] }),
-            findById: () => ({ exec: async () => null }),
-            findByIdAndUpdate: () => ({ exec: async () => null }),
-            findOne: () => ({ exec: async () => null }),
+            find: () => ({ exec: () => Promise.resolve([]) }),
+            findById: () => ({ exec: () => Promise.resolve(null) }),
+            findByIdAndUpdate: () => ({ exec: () => Promise.resolve(null) }),
+            findOne: () => ({ exec: () => Promise.resolve(null) }),
           },
         },
         {
@@ -39,7 +40,7 @@ const FAKE_PROVIDERS =
       ]
     : [];
 @Module({
-  imports: [NgxAuthClientModule, ...SCHEMA_IMPORTS],
+  imports: [ObservabilityModule, NgxAuthClientModule, ...SCHEMA_IMPORTS],
   controllers: [ExampleCrudController],
   providers: [ExampleCrudService, ...FAKE_PROVIDERS],
 })

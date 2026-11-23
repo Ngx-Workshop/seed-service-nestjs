@@ -1,6 +1,7 @@
 import { ConsoleLogger, INestApplication, Logger } from '@nestjs/common';
 import type { NextFunction, Request, Response } from 'express';
 import { randomUUID } from 'node:crypto';
+import { RequestContext } from './request-context';
 
 export function createServiceLogger(): ConsoleLogger {
   return new ConsoleLogger({
@@ -10,7 +11,10 @@ export function createServiceLogger(): ConsoleLogger {
   });
 }
 
-export function httpLoggingMiddleware(logger = new Logger('HTTP')) {
+export function httpLoggingMiddleware(
+  logger: Pick<Logger, 'log' | 'warn' | 'error'> = new Logger('HTTP'),
+  context = new RequestContext()
+) {
   return (request: Request, response: Response, next: NextFunction): void => {
     // Heartbeats are represented by probe metrics, not repetitive access logs.
     if (
@@ -20,7 +24,14 @@ export function httpLoggingMiddleware(logger = new Logger('HTTP')) {
       next();
       return;
     }
-    const requestId = randomUUID();
+    const incomingId = request.headers['x-request-id'];
+    const requestId =
+      typeof incomingId === 'string' &&
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+        incomingId
+      )
+        ? incomingId.toLowerCase()
+        : randomUUID();
     const started = process.hrtime.bigint();
     response.setHeader('X-Request-ID', requestId);
     response.once('finish', () => {
@@ -38,11 +49,11 @@ export function httpLoggingMiddleware(logger = new Logger('HTTP')) {
       else if (entry.statusCode >= 400) logger.warn(entry);
       else logger.log(entry);
     });
-    next();
+    context.run(requestId, next);
   };
 }
 
 export function configureObservability(app: INestApplication): void {
-  app.use(httpLoggingMiddleware());
+  app.use(httpLoggingMiddleware(undefined, app.get(RequestContext)));
   app.enableShutdownHooks();
 }

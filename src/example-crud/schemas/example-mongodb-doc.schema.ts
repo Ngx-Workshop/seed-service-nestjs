@@ -46,8 +46,8 @@ export const ExampleMongodbDocSchema =
 ExampleMongodbDocSchema.pre(
   ['findOneAndUpdate', 'updateOne', 'updateMany'],
   function () {
-    const update = this.getUpdate() as any;
-    if (update) {
+    const update = this.getUpdate();
+    if (update && !Array.isArray(update)) {
       if (!update.$inc) {
         update.$inc = {};
       }

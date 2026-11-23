@@ -10,7 +10,7 @@ const DB_IMPORTS =
     : [
         MongooseModule.forRootAsync({
           inject: [ConfigService],
-          useFactory: async (config: ConfigService) => ({
+          useFactory: (config: ConfigService) => ({
             uri: config.get<string>('MONGODB_URI'),
             serverSelectionTimeoutMS: 5000, // Timeout in 5 seconds
           }),

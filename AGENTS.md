@@ -37,3 +37,16 @@ All links above resolve within this checkout. Do not assume a sibling repository
 
 This is a Markdown workflow inspired by Spec Kit. It does not install Spec Kit,
 register slash commands, or require a particular AI tool.
+
+## Next task: Code Maintenance
+
+The selected work is [Code Maintenance](specs/003-code-maintenance/spec.md)
+(Implemented; integration pending).
+Read its [plan](specs/003-code-maintenance/plan.md), [tasks](specs/003-code-maintenance/tasks.md) and
+[handoff](specs/003-code-maintenance/handoff.md). Local T001–T010 evidence is recorded;
+retain older unfinished
+feature records without treating them as the next task. The requested work covers
+NestJS module/domain boundaries, thin controllers, cohesive services, Prettier
+with Husky/lint-staged, CI checks and safe domain logging through existing
+observability. See the handoff for pending Docker and external integration checks;
+do not describe local verification as live Grafana receipt.

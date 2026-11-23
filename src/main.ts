@@ -19,4 +19,13 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3003, '0.0.0.0');
 }
-bootstrap();
+void bootstrap().catch(() => {
+  createServiceLogger().error(
+    {
+      event: 'bootstrap_failed',
+      reason: 'startup_failure',
+    },
+    'Bootstrap'
+  );
+  process.exit(1);
+});

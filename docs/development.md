@@ -18,15 +18,43 @@ placeholder for your actual auth service; it does not launch one. Inspect the
 installed auth-client package for additional configuration before testing guarded
 routes. Never set `GENERATE_OPENAPI=true` when running the real API.
 
-| Purpose | Command | Notes |
-| --- | --- | --- |
-| Development | `npm run start:dev` | Requires reachable MongoDB |
-| Build and OpenAPI | `GENERATE_OPENAPI=true npm run build` | `postbuild` generates `openapi.json`; explicit flag avoids import-order issue |
-| Regenerate OpenAPI | `GENERATE_OPENAPI=true npm run openapi` | Uses existing compiled output; build first after source changes |
-| Production runtime | `npm run start:prod` | Runs compiled code with runtime environment |
-| Unit tests | `npm test -- --runInBand` | No source unit specs currently present |
-| End-to-end tests | `npm run test:e2e -- --runInBand` | Existing test is stale; see below |
-| Lint | `npm run lint` | Uses `--fix` and can modify files; inspect resulting changes |
+| Purpose                   | Command                                 | Notes                                                                         |
+| ------------------------- | --------------------------------------- | ----------------------------------------------------------------------------- |
+| Development               | `npm run start:dev`                     | Requires reachable MongoDB                                                    |
+| Build and OpenAPI         | `GENERATE_OPENAPI=true npm run build`   | `postbuild` generates `openapi.json`; explicit flag avoids import-order issue |
+| Regenerate OpenAPI        | `GENERATE_OPENAPI=true npm run openapi` | Uses existing compiled output; build first after source changes               |
+| Production runtime        | `npm run start:prod`                    | Runs compiled code with runtime environment                                   |
+| Unit tests                | `npm test -- --runInBand`               | CRUD persistence/logging and observability suites                             |
+| End-to-end tests          | `npm run test:e2e -- --runInBand`       | Isolated real-controller/service HTTP tests, model and auth guard doubles     |
+| Lint                      | `npm run lint`                          | Uses `--fix` and can modify files; inspect resulting changes                  |
+| Non-mutating lint         | `npm run lint:check`                    | Used by validation and pre-publication CI                                     |
+| Non-mutating formatting   | `npm run format:check`                  | Source/tests, tooling, root config and CI; generated output excluded          |
+| Hook/install verification | `npm run verify:maintenance`            | Disposable installs/Git fixtures; registry access, no deployment              |
+
+## Staged formatting
+
+`npm ci` enables Husky in a developer Git checkout. The pre-commit hook runs the
+installed lint-staged binary (no download-on-commit) and Prettier for staged
+TS/JS/JSON/Markdown/YAML files. lint-staged hides/restores partially staged edits;
+do not disable its stash/hide behavior. A formatter failure blocks the commit.
+Generated contracts/OpenAPI, lockfiles, dependency/vendor and build/coverage
+output are ignored. Historical documentation is not part of the CI formatting
+migration; Markdown files are still formatted when deliberately staged.
+
+The manifest-contained prepare lifecycle skips hook setup for CI, `HUSKY=0`,
+production/no-dev installs, no Git metadata, or absent Husky. Docker still copies
+only manifests before `npm ci`; no hook installer file is needed. Normal installs
+retain other package lifecycle scripts. `verify:maintenance` tests real commits
+only in automatically removed temporary repositories, including partial staging,
+an unrelated unstaged file, generated exclusions, failure blocking and a
+non-mutating negative formatting check.
+
+Validation runs on pull requests/main; the existing publish workflow runs the
+same checks before building/publishing. Local evidence uses Node 22.23.3/npm
+10.9.9; CI/Docker remain pinned to Node 22.23.5. Package-only installs were tested;
+an actual image build requires a running Docker daemon. Production `--omit=dev`
+installation passing does not certify production startup: the inherited auth
+client is still a devDependency, and Docker currently retains devDependencies.
 
 ## API/contract changes
 
@@ -73,16 +101,14 @@ Source observations from 2026-09-29; these are not executed test results.
 - `src/swagger.ts` imports `AppModule` before setting `GENERATE_OPENAPI` inside its
   function. Conditional imports/providers are evaluated earlier. Set the flag in
   the command environment as shown above; Docker and CI already do this.
-- `test/app.e2e-spec.ts` expects `GET /` to return `Hello World!`, but this module
-  has no root controller. It imports the real application/database and does not
-  mirror the runtime's global pipe/cookie setup or close the app. Do not count it
-  as a working API regression suite.
-- No `src/**/*.spec.ts` tests exist in this baseline. A no-tests exit is not a pass;
-  add meaningful coverage for implementation work rather than suppressing it.
+- HTTP regression tests reproduce global validation and close the application.
+  They exercise real controller/service behavior with persistence and guard doubles,
+  not a live MongoDB/auth deployment. They do not certify the external auth-client
+  protocol or MongoDB concurrency/version behavior.
 - Only `auth-test` has a guard. The demonstration write endpoints are unguarded;
   a production feature must define its access requirements explicitly.
-- `UpdateExampleMongodbDocDto` is declared in both DTO files. The controller uses
-  `update.dto.ts`; avoid extending the unused duplicate by accident.
+- `UpdateExampleMongodbDocDto` is owned by `update.dto.ts`, with an import-compatible
+  re-export from `create.dto.ts`.
 - IDs are passed directly to Mongoose; `findByIdAndUpdate` does not request
   `runValidators`. Query values other than literal `true`/`false` leave archive
   filtering unset. Decide and test the intended semantics when touching these areas.

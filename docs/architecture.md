@@ -92,3 +92,5 @@ Docker uses Node 22. The existing Compose filename contains a trailing space and
 uses the external `ngx-net` network. The GitHub workflow publishes the contracts
 package and deploys the seed service on pushes to `main`; it contains seed-specific
 targets and database constraints. Review those when adopting the seed.
+
+Generated deployment orchestration is centrally managed by the Node CLI; see [deployment-workflows](deployment-workflows.md).

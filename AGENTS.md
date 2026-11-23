@@ -50,3 +50,5 @@ NestJS module/domain boundaries, thin controllers, cohesive services, Prettier
 with Husky/lint-staged, CI checks and safe domain logging through existing
 observability. See the handoff for pending Docker and external integration checks;
 do not describe local verification as live Grafana receipt.
+
+Current deployment policy: [deployment-workflows](docs/deployment-workflows.md). Automatic main delivery verifies/deploys; npm publication is manual only. This supersedes older automatic-publishing instructions.
